@@ -1,0 +1,12 @@
+spring:
+  r2dbc:
+    name: test
+    password: test
+    username: test
+
+  sql:
+    init:
+#      schema-locations: classpath:sql/schema.sql
+#      mode: always
+demo:
+  database: H2

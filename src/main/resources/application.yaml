@@ -1,0 +1,13 @@
+spring:
+  r2dbc:
+    name: demo
+    password: demo
+    username: demo
+    initialization-mode: always
+
+quote:
+  host: "http://api.quotable.io"
+  path: "/quotes/random"
+
+demo:
+  greeting: こんにちは
