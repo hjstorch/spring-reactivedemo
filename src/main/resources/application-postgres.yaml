@@ -1,0 +1,15 @@
+spring:
+  r2dbc:
+    url: r2dbc:postgresql://localhost:5432/demo
+    name: demo
+    password: test
+    username: test
+
+  sql:
+    init:
+      data-locations: classpath:sql/data_postgres.sql
+      mode: always
+      schema-locations: classpath:sql/schema.sql
+
+demo:
+  database: SQL
