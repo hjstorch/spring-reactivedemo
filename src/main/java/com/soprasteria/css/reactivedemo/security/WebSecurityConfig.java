@@ -13,12 +13,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.server.SecurityWebFilterChain;
-import org.springframework.web.context.annotation.ApplicationScope;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.reactive.config.CorsRegistry;
 import org.springframework.web.reactive.config.WebFluxConfigurer;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 @Configuration
 @EnableWebFluxSecurity
@@ -33,6 +33,8 @@ public class WebSecurityConfig implements WebFluxConfigurer {
                         exchanges
                                 .pathMatchers(HttpMethod.OPTIONS).permitAll()
                                 .pathMatchers("/countdown/**").permitAll()
+                                .pathMatchers("/hello/**").permitAll()
+                                .pathMatchers("/product/**").hasRole("USER")
                                 .anyExchange().authenticated()
                 )
                 .csrf(ServerHttpSecurity.CsrfSpec::disable)
@@ -45,7 +47,7 @@ public class WebSecurityConfig implements WebFluxConfigurer {
 
     @Bean
     public MapReactiveUserDetailsService userDetailsService() {
-        List<UserDetails> userDetails = List.of("user", "admin").stream()
+        List<UserDetails> userDetails = Stream.of("user", "admin")
                 .map(username ->
                         User.builder()
                                 .username(username)
@@ -57,7 +59,6 @@ public class WebSecurityConfig implements WebFluxConfigurer {
     }
 
     @Bean
-    @ApplicationScope
     public PasswordEncoder getPasswordEncoder() {
         return NoOpPasswordEncoder.getInstance();
     }
