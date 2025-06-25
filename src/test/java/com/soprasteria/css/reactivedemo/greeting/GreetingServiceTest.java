@@ -12,6 +12,7 @@ import static org.mockito.Mockito.when;
 
 public class GreetingServiceTest {
 
+    public static final String SOMETHING_WISE_QUOTE = "something wise";
     private GreetingService greetingService;
 
     private QuoteService quoteService = Mockito.mock(QuoteService.class);
@@ -19,7 +20,7 @@ public class GreetingServiceTest {
     @BeforeEach
     public void setUp() {
         Quote quote = new Quote();
-        quote.setContent("something wise");
+        quote.setContent(SOMETHING_WISE_QUOTE);
         when(this.quoteService.getQuote()).thenReturn(Mono.just(quote));
 
         this.greetingService = new GreetingService(quoteService, "Hello");
@@ -31,7 +32,7 @@ public class GreetingServiceTest {
         StepVerifier.create(greetingService.createGreeting(Mono.just("User")))
                 .expectNextMatches( greet ->
                         greet.getGreeting().equals("Hello User") &&
-                                greet.getQuote().equals("something wise")
+                                greet.getQuote().equals(SOMETHING_WISE_QUOTE)
                         )
                 .verifyComplete();
     }
