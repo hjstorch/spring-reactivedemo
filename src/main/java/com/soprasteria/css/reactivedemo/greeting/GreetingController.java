@@ -19,7 +19,7 @@ public class GreetingController {
                                 @RequestAttribute(required = false) String myname,
                                 @RequestAttribute(required = false) boolean badname) {
         return greetingService.createGreeting(Mono.justOrEmpty(name))
-                .doOnError( ex -> log.error("an error occurred at greeting name", ex))
+                .doOnError( ex -> log.warn("an error occurred at greeting name - going to fallback; cause: {}", ex.getMessage()))
                 .onErrorResume(e ->
                         greetingService.createGreeting(
                                 Mono.justOrEmpty( badname ? myname : "World")
