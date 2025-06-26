@@ -1,6 +1,6 @@
 package com.soprasteria.css.reactivedemo.product;
 
-import com.soprasteria.css.reactivedemo.persistence.ProductEntity;
+import com.soprasteria.css.reactivedemo.persistence.entity.ProductEntity;
 import com.soprasteria.css.reactivedemo.persistence.ProductRepository;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

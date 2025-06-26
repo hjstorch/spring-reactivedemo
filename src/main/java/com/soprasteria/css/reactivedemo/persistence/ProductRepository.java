@@ -1,8 +1,7 @@
 package com.soprasteria.css.reactivedemo.persistence;
 
+import com.soprasteria.css.reactivedemo.persistence.entity.ProductEntity;
 import org.springframework.data.r2dbc.repository.R2dbcRepository;
-import org.springframework.data.repository.reactive.ReactiveCrudRepository;
-import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;
 
 import java.util.UUID;

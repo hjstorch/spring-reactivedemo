@@ -1,5 +1,6 @@
 package com.soprasteria.css.reactivedemo.persistence;
 
+import com.soprasteria.css.reactivedemo.persistence.entity.ProductEntity;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;

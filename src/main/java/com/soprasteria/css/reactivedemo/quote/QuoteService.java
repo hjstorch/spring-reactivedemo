@@ -26,7 +26,6 @@ public class QuoteService {
         this.quoteClient = quoteClient;
         this.quoteApi = quoteApi;
         this.quotePath = quotePath;
-
     }
 
     /**
@@ -35,14 +34,13 @@ public class QuoteService {
      */
     public Flux<Quote> getQuotes() {
         return getRequestHeadersSpec()
+                .accept(MediaType.TEXT_EVENT_STREAM) // get non blocking stream response
                 .retrieve()
                 .bodyToFlux(Quote.class);
     }
 
     public Mono<Quote> getQuote() {
-        return getRequestHeadersSpec()
-                .retrieve()
-                .bodyToFlux(Quote.class)
+        return getQuotes()
                 .elementAt(0, new Quote());
     }
 
@@ -52,6 +50,7 @@ public class QuoteService {
      */
     public Mono<Quote> exchangeQuote() {
         return getRequestHeadersSpec()
+                .accept(MediaType.TEXT_EVENT_STREAM)// get non blocking stream response
                 .exchangeToFlux( clientResponse -> {
                     if (clientResponse.statusCode().equals(HttpStatus.OK)) {
                         return clientResponse.bodyToFlux(Quote.class);
@@ -65,14 +64,10 @@ public class QuoteService {
     }
 
     private WebClient.RequestHeadersSpec<?> getRequestHeadersSpec() {
-        return webClient.get()
-                .uri(quoteApi + quotePath)
-                .accept(MediaType.TEXT_EVENT_STREAM); // get non blocking stream response
+        return webClient.get().uri(quoteApi + quotePath);
     }
 
     private WebClient.RequestHeadersSpec<?> getQuoteRequestHeadersSpec() {
-        return quoteClient.get()
-                .uri(quotePath) // quoteClient has baseUrl set
-                .accept(MediaType.TEXT_EVENT_STREAM); // get non blocking stream response
+        return quoteClient.get().uri(quotePath); // quoteClient has baseUrl set
     }
 }
