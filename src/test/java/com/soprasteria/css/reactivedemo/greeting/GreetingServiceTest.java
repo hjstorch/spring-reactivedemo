@@ -34,7 +34,7 @@ public class GreetingServiceTest {
                         greet.getGreeting().equals("Hello User") &&
                                 greet.getQuote().equals(SOMETHING_WISE_QUOTE)
                         )
-                .verifyComplete();
+                .verifyComplete(); // short for .expectComplete().verify()
     }
 
     @Test
