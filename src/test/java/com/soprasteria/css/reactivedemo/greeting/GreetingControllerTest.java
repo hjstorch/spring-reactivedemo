@@ -76,7 +76,7 @@ public class GreetingControllerTest {
     }
 
     @Test
-    public void testEmpty() {
+    public void testEmptyName() {
 
         sut.greet(null, null, false)
                 .as(StepVerifier::create)
