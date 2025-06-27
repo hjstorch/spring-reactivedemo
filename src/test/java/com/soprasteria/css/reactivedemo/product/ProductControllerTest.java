@@ -1,39 +1,39 @@
 package com.soprasteria.css.reactivedemo.product;
 
-import com.soprasteria.css.reactivedemo.persistence.entity.ProductEntity;
-import com.soprasteria.css.reactivedemo.persistence.ProductRepository;
+import com.soprasteria.css.reactivedemo.product.model.Product;
+import com.soprasteria.css.reactivedemo.product.service.ProductService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
-import java.util.UUID;
+import java.util.NoSuchElementException;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 public class ProductControllerTest {
 
-    private final ProductRepository productRepository = mock(ProductRepository.class);
+    private final ProductService productService = mock(ProductService.class);
 
     private ProductController sut;
 
     @BeforeEach
     public void setUp() {
-        when(productRepository.findAll())
-                .thenReturn(Flux.just(new ProductEntity(UUID.randomUUID()),
-                        new ProductEntity(UUID.randomUUID())));
+        when(productService.listProducts())
+                .thenReturn(Flux.just(
+                        Product.builder().name("P2").build(),
+                        Product.builder().name("P2").build()));
 
         doAnswer( in ->
                 Mono.defer( () -> {
-                    ProductEntity entity = new ProductEntity();
-                    entity.setId(in.getArgument(0));
-                    return Mono.just(entity);
+                    Product p = Product.builder().name(in.getArgument(0)).build();
+                    return Mono.just(p);
                 })
-        ).when(productRepository).findById(any(UUID.class));
+        ).when(productService).getProduct(any(String.class));
 
-        sut = new ProductController(productRepository);
+        sut = new ProductController(productService);
     }
 
     @Test
@@ -47,13 +47,36 @@ public class ProductControllerTest {
 
     @Test
     public void getProductTest() {
-        UUID uuid = UUID.randomUUID();
-        sut.getProduct(uuid)
+        String name = "P1";
+        sut.getProduct(name)
                 .as(StepVerifier::create)
                 .expectNextMatches( product ->
-                        product.getId().equals(uuid)
+                        product.getName().equals(name)
                 )
                 .expectComplete()
+                .verify();
+    }
+
+    @Test
+    public void getProductErrorTest() {
+
+        when(productService.getProduct(any(String.class))).thenReturn(Mono.empty());
+
+        String name = "P1";
+        sut.getProduct(name)
+                .as(StepVerifier::create)
+                .expectError(NoSuchElementException.class)
+                .verify();
+    }
+
+    @Test
+    public void getProductsErrorTest() {
+
+        when(productService.listProducts()).thenReturn(Flux.empty());
+
+        sut.listProducts()
+                .as(StepVerifier::create)
+                .expectError(NoSuchElementException.class)
                 .verify();
     }
 }

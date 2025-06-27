@@ -1,6 +1,6 @@
-package com.soprasteria.css.reactivedemo.greeting;
+package com.soprasteria.css.reactivedemo.greeting.service;
 
-import com.soprasteria.css.reactivedemo.quote.Quote;
+import com.soprasteria.css.reactivedemo.greeting.model.Greeting;
 import com.soprasteria.css.reactivedemo.quote.QuoteService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;

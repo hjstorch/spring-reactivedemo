@@ -60,7 +60,7 @@ public class ProductRepositoryTest {
                 .expectNextCount(3)
                 .verifyComplete();
 
-        productRepository.findAllByName("P99")
+        productRepository.findByName("P99")
                 .as(StepVerifier::create)
                 .recordWith(ArrayList::new)
                 .thenConsumeWhile(Objects::nonNull)

@@ -1,4 +1,4 @@
-package com.soprasteria.css.reactivedemo.greeting;
+package com.soprasteria.css.reactivedemo.greeting.model;
 
 import lombok.Builder;
 import lombok.Data;

@@ -1,5 +1,7 @@
 package com.soprasteria.css.reactivedemo.greeting;
 
+import com.soprasteria.css.reactivedemo.greeting.model.Greeting;
+import com.soprasteria.css.reactivedemo.greeting.service.GreetingService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;

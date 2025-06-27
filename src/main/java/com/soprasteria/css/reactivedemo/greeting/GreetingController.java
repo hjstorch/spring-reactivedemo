@@ -1,5 +1,7 @@
 package com.soprasteria.css.reactivedemo.greeting;
 
+import com.soprasteria.css.reactivedemo.greeting.model.Greeting;
+import com.soprasteria.css.reactivedemo.greeting.service.GreetingService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;

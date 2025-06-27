@@ -1,5 +1,6 @@
 package com.soprasteria.css.reactivedemo.quote;
 
+import com.soprasteria.css.reactivedemo.quote.model.Quote;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;

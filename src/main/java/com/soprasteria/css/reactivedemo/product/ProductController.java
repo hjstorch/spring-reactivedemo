@@ -1,35 +1,33 @@
 package com.soprasteria.css.reactivedemo.product;
 
-import com.soprasteria.css.reactivedemo.persistence.entity.ProductEntity;
-import com.soprasteria.css.reactivedemo.persistence.ProductRepository;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.soprasteria.css.reactivedemo.product.model.Product;
+import com.soprasteria.css.reactivedemo.product.service.ProductService;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.util.UUID;
+import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/product")
 public class ProductController {
 
-    private final ProductRepository productRepository;
+    private final ProductService productService;
 
-    public ProductController(ProductRepository productRepository) {
-        this.productRepository = productRepository;
+    public ProductController(ProductService productService) {
+        this.productService = productService;
     }
 
     @GetMapping
-    public Flux<ProductEntity> listProducts() {
-        return productRepository.findAll()
-                .switchIfEmpty(Flux.empty());
+    public Flux<Product> listProducts() {
+        return productService.listProducts()
+                .switchIfEmpty(Mono.error(new NoSuchElementException("no products found")));
     }
 
-    @GetMapping("{id}")
-    public Mono<ProductEntity> getProduct(@PathVariable UUID id) {
-        return productRepository.findById(id)
-                .switchIfEmpty(Mono.empty());
+    @GetMapping("{name}")
+    public Mono<Product> getProduct(@PathVariable String name) {
+        return productService.getProduct(name)
+                .switchIfEmpty(Mono.error(new NoSuchElementException(name + " does not exist")));
     }
 }

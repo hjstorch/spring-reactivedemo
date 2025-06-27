@@ -1,5 +1,6 @@
 package com.soprasteria.css.reactivedemo.quote;
 
+import com.soprasteria.css.reactivedemo.quote.model.Quote;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;

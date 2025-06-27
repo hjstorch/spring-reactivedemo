@@ -1,6 +1,8 @@
 package com.soprasteria.css.reactivedemo.greeting;
 
-import com.soprasteria.css.reactivedemo.quote.Quote;
+import com.soprasteria.css.reactivedemo.greeting.model.Greeting;
+import com.soprasteria.css.reactivedemo.greeting.service.GreetingService;
+import com.soprasteria.css.reactivedemo.quote.model.Quote;
 import com.soprasteria.css.reactivedemo.quote.QuoteService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -25,7 +27,7 @@ import static org.springframework.test.util.AssertionErrors.assertNotNull;
     }
 )
 @AutoConfigureWebTestClient
-@Import(GreetingService.class)
+@Import({GreetingService.class})
 @ActiveProfiles("test")
 public class GreetingControllerITest {
 
@@ -49,7 +51,7 @@ public class GreetingControllerITest {
         client.get().uri("/hello/")
                 .exchange()
                 .expectStatus().is2xxSuccessful()
-                .expectBody(Greeting.class).consumeWith( result -> {
+                .expectBody(Greeting.class).consumeWith(result -> {
                     Greeting greeting = result.getResponseBody();
                     assertNotNull("", greeting);
                     assertNotNull("", greeting.getGreeting());

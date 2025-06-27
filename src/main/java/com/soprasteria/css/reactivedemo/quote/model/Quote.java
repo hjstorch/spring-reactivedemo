@@ -1,4 +1,4 @@
-package com.soprasteria.css.reactivedemo.quote;
+package com.soprasteria.css.reactivedemo.quote.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
