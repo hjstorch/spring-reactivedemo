@@ -36,15 +36,19 @@ import java.util.Objects;
 @Testcontainers()
 class ProductRepositoryTCTest {
 
+    /***
+     * this TC test has problems with running in combination MacOS/(co)lima on AppleSilicon
+     * run with DockerDesktop or RancherDesktop on MacOS to pass
+     */
+
     @Autowired
     private ProductRepository productRepository;
 
-    // it is not necessary to instanciate a Postgres Container
+    // it is not necessary to instanciate a Postgres container
     // @Container
     // ...
 
     @Test
-    @Disabled
     public void readFromRepositoryReturnsEntities(){
         productRepository.findAll()
                 .as(StepVerifier::create)
@@ -53,7 +57,6 @@ class ProductRepositoryTCTest {
     }
 
     @Test
-    @Disabled
     public void testWriteAndDelete(){
 
         ProductEntity newEntity = new ProductEntity();
