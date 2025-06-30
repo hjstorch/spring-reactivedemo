@@ -37,7 +37,7 @@ public class ProductControllerTest {
     }
 
     @Test
-    public void listProductsTest() {
+    public void listProductsReturnsConfiguredProducts() {
         sut.listProducts()
                 .as(StepVerifier::create)
                 .expectNextCount(2)
@@ -46,7 +46,7 @@ public class ProductControllerTest {
     }
 
     @Test
-    public void getProductTest() {
+    public void getProductByNameReturnsOneMatchingProduct() {
         String name = "P1";
         sut.getProduct(name)
                 .as(StepVerifier::create)
@@ -58,7 +58,7 @@ public class ProductControllerTest {
     }
 
     @Test
-    public void getProductErrorTest() {
+    public void getProductWithNoMatchingNameThrowsException() {
 
         when(productService.getProduct(any(String.class))).thenReturn(Mono.empty());
 
@@ -70,7 +70,7 @@ public class ProductControllerTest {
     }
 
     @Test
-    public void getProductsErrorTest() {
+    public void listProductsWithEmptyRepositoryThrowsException() {
 
         when(productService.listProducts()).thenReturn(Flux.empty());
 

@@ -45,7 +45,7 @@ public class QuoteServiceITest {
     }
 
     @Test
-    void testGetRandomQuote() throws JsonProcessingException, InterruptedException {
+    void getQuoteReturnsFirstQuteFromWeb() throws JsonProcessingException, InterruptedException {
         mockBackEnd.enqueue(new MockResponse()
                 .addHeader("Content-Type", "application/json; charset=utf-8")
                 .setBody(mapper.writeValueAsString(new Quote("First Quote","")))

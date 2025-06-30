@@ -33,7 +33,7 @@ public class QuoteServiceTest {
     }
 
     @Test
-    void testGetRandomQuote() {
+    void getQuoteReturnsFirstQuteFromClient() {
         quoteService.getQuote()
                 .as(StepVerifier::create)
                 .expectNextMatches( m ->

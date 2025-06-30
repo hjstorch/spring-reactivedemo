@@ -36,19 +36,20 @@ public class GreetingControllerTest {
 
 
     @Test
-    public void testNormal() {
+    public void requestGreetingWithUserReturnsConfiguredGreetingAndQuote() {
 
         sut.greet("User", null, false)
                 .as(StepVerifier::create)
                 .expectNextMatches( greet ->
-                        greet.getGreeting().equals("Hello User")
+                        greet.getGreeting().equals("Hello User") &&
+                                greet.getQuote().equals("something wise")
                 )
                 .expectComplete()
                 .verify();
     }
 
     @Test
-    public void testBadName() {
+    public void requestGreetingWithBadNameReturnsGreetingReplacedUser() {
 
         sut.greet(null, "User", true)
                 .as(StepVerifier::create)
@@ -62,7 +63,7 @@ public class GreetingControllerTest {
     }
 
     @Test
-    public void testIgnoreUriParameterIfNoBadName() {
+    public void requestGreetingWithoutBadUserIgnoresReplacedUser() {
 
         sut.greet(null, "User", false)
                 .as(StepVerifier::create)
@@ -76,7 +77,7 @@ public class GreetingControllerTest {
     }
 
     @Test
-    public void testEmptyName() {
+    public void requestGreetingWithoutNameReturnsWorld() {
 
         sut.greet(null, null, false)
                 .as(StepVerifier::create)

@@ -47,7 +47,7 @@ public class GreetingControllerITest {
 
     @Test
     @WithMockUser
-    public void greetingNoUserTest() {
+    public void requestGreetingWithNoUserReturnsWorld() {
         client.get().uri("/hello/")
                 .exchange()
                 .expectStatus().is2xxSuccessful()
@@ -64,7 +64,7 @@ public class GreetingControllerITest {
 
     @Test
     @WithMockUser
-    public void greetingTest() {
+    public void requestGreetingWithUserReturnsConfiguredGreeting() {
         client.get().uri("/hello/user")
                 .exchange()
                 .expectStatus().is2xxSuccessful()

@@ -28,7 +28,7 @@ public class GreetingServiceTest {
     }
 
     @Test
-    public void greetingTest() {
+    public void createGreetingWithUserReturnsConfiguredGreetingAndQuote() {
 
         StepVerifier.create(greetingService.createGreeting(Mono.just("User")))
                 .expectNextMatches( greet ->
@@ -39,14 +39,14 @@ public class GreetingServiceTest {
     }
 
     @Test
-    public void greetingWithEmptyUserTest() {
+    public void createGreetingWithoutNameReturnsError() {
         StepVerifier.create(greetingService.createGreeting(Mono.empty()))
                 .expectError(IllegalArgumentException.class)
                 .verify();
     }
 
     @Test
-    public void greetingWithEmptyUserNameTest() {
+    public void createGreetingWithEmptyNameReturnsError() {
         StepVerifier.create(greetingService.createGreeting(Mono.just("")))
                 .expectError(IllegalArgumentException.class)
                 .verify();

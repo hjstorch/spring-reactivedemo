@@ -64,7 +64,7 @@ public class ProductControllerITest {
 
     @Test
     @WithMockUser
-    public void productsTest() {
+    public void requestProductCallsRepositoryReturns200ConfiguredProducts() {
         client.get().uri("/product")
                 .exchange()
                 .expectStatus().is2xxSuccessful()
@@ -81,7 +81,7 @@ public class ProductControllerITest {
 
     @Test
     @WithMockUser
-    public void productByNameTest() {
+    public void requestProductByNameCallsRepositoryReturns200OneMatchingProduct() {
         client.get().uri("/product/P1")
                 .exchange()
                 .expectStatus().is2xxSuccessful()
@@ -99,7 +99,7 @@ public class ProductControllerITest {
 
     @Test
     @WithMockUser
-    public void noProductsTest() {
+    public void whenNoProductsInRepositoryRequestProductCallsRepositoryReturns404() {
         when(productRepository.findAll())
                 .thenReturn(Flux.empty());
 
@@ -117,7 +117,7 @@ public class ProductControllerITest {
 
     @Test
     @WithMockUser
-    public void productWithNameNotExistsTest() {
+    public void requestProductWithNameNotExistsCallsRepositoryReturns404() {
         when(productRepository.findByName("P88")).thenReturn(Mono.empty());
 
         client.get().uri("/product/P88")
